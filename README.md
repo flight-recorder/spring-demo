@@ -47,7 +47,7 @@
    but it will ruin the surprise later)
 
 5. Event Streaming allows events to be accessed without creating a dump.
-   This means JFR can be used for monitoring purposes.    Monioring can happen in 
+   This means JFR can be used for monitoring purposes. Monioring can happen in 
    a separate process to reduce impact on the application.
 
    $ java Monitor.java
@@ -75,5 +75,5 @@
    stores event, is exposed in system property. A stream is opened against the
    directory and if a HttpRequest event is detected that takes more than 500 ms,
    a second stream is started from 1 second before the request to 1 second after.
-   The stream will detected if there is lock contention, gc pauses or if a hot
+   The stream will detect if there is lock contention, gc pauses or if a hot
    method was executed at the same time.
