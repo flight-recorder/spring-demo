@@ -14,26 +14,27 @@ import jdk.jfr.StackTrace;
 @Component
 public class TraceHandler extends HandlerInterceptorAdapter {
 
-	@Name("HttpRequest")
-	@StackTrace(false)
-	static class HttpRequestEvent extends Event {
-		@Label("Request Path")
-		public String requestURI;
-	}
+    @Name("HttpRequest")
+    @StackTrace(false)
+    static class HttpRequestEvent extends Event {
+        @Label("Request Path")
+        public String requestURI;
+    }
 
-	private HttpRequestEvent event;
+    private HttpRequestEvent event;
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		event = new HttpRequestEvent();
-		event.begin();
-		return true;
-	}
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        event = new HttpRequestEvent();
+        event.begin();
+        return true;
+    }
 
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-		event.requestURI = request.getRequestURI();
-		event.end();
-		event.commit();
-	}
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+            Exception ex) {
+        event.requestURI = request.getRequestURI();
+        event.end();
+        event.commit();
+    }
 }

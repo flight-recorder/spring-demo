@@ -8,11 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class TraceConfig implements WebMvcConfigurer {
 
-	@Autowired
-	private TraceHandler traceHandler;
+    @Autowired
+    private TraceHandler traceHandler;
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(traceHandler);
-	}
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(traceHandler);
+    }
 }
