@@ -1,19 +1,18 @@
 # spring-demo
 
 1. This demo shows a simple REST service that returns a hello message.
-   To simplify troubleshooting, the application can be started
-   with Flight Recorder.
+   To troubleshoot the application start it with Flight Recorder.
 
    java -XX:StartFlightRecording -jar target\hello.app-1.0.0.jar
 
    Wait for the server to come online.
 
-   (To build the hello application, do:
+   To build the hello application, do:
    
    $ mvn package 
    
    Maven uses JAVA_HOME to locate the JVM, so make sure
-   it points to JDK 13, or earlier)
+   it points to JDK 13, or earlier.
 
 2. Open a web brower to http://localhost/hello
    It will display some JSON with an id that is
@@ -29,22 +28,23 @@
 3. Instrumentation has been added to better understand why and when a request
    is slow. In the TraceHandler.java, a JFR event (HttpRequest) is defined and 
    created when a new request comes in. The event is commited to JFR when the
-   requests end. In each event the request URI is stored.
+   requests end. In each event, the request URI is stored.
 
 4. Start a second shell where JDK_14\bin is on the path. To dump a recording file, 
-   the jcmd toll can be used:
+   the jcmd tool can be used:
 
    $ jcmd hello.app.Application JFR.dump filename=dump.jfr
 
    The recording can be opened in JDK Mission Control, but it is also possible to
-   print the contents on command line, the 'jfr' tool called 'jfr', 
-   (backported to JDK 11.06)
+   print the contents on command line, the 'jfr' tool'.
 
    $ jfr print dump.jfr
 
-   (It is possible to filter out the HttpRequest event using 
+   It is possible to filter out the HttpRequest event using:
+   
    $ jfr print --events HttpRequest dump.jfr
-   but it will ruin the surprise later)
+   
+   but it will ruin the surprise later.
 
 5. Event Streaming allows events to be accessed without creating a dump.
    This means JFR can be used for monitoring purposes. Monioring can happen in 
@@ -56,10 +56,10 @@
    The HttpRequest event should now be printed on standard out.
 
    Monitor.java contains code that checks if a request takes more than 500 ms
-   and if so, it will see what other event happened at the same time.
+   and if so, it checks what other event happened at the same time.
 
    - Open http://localhost/hello1
-     It should print the stack trace of  methods that was running
+     It should print the stack trace of the methods that was running
      at the same time as the request
 
    - Open http://localhost/hello2 (may need to reload to trigger GC)
